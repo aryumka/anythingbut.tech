@@ -12,68 +12,121 @@ const posts = (await getCollection('blog')).sort(
 <!doctype html>
 <html lang="ko">
 	<head>
-		<BaseHead title={`Posts - ${SITE_TITLE}`} description="모든 글" />
+		<BaseHead title={`Posts — ${SITE_TITLE}`} description="모든 글" />
 	</head>
 	<body>
 		<Header />
-		<main>
-			<div class="posts-list">
-				{posts.map((post) => (
-					<a href={`/blog/${post.id}/`} class="post-item">
+		<div class="content">
+			<h1 class="page-title">Posts</h1>
+
+			{posts.map((post, i) => (
+				<a href={`/blog/${post.id}/`} class="post-item" style={`animation-delay: ${0.1 + i * 0.05}s`}>
+					<span class="post-number">{String(posts.length - i).padStart(2, '0')}</span>
+					<div class="post-info">
+						<div class="post-title">{post.data.title}</div>
+						{post.data.description && (
+							<div class="post-excerpt">{post.data.description}</div>
+						)}
+					</div>
+					<div class="post-meta">
 						<span class="post-date">
-							{post.data.pubDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+							{post.data.pubDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\. /g, '.').replace(/\.$/, '')}
 						</span>
-						<span class="post-title">{post.data.title}</span>
-					</a>
-				))}
-			</div>
-		</main>
+					</div>
+				</a>
+			))}
+		</div>
 
 		<style>
-			main {
+			.content {
 				max-width: 720px;
 				margin: 0 auto;
-				padding: 48px 48px;
+				padding: 48px 48px 120px;
 			}
-			.posts-list {
-				display: flex;
-				flex-direction: column;
+
+			.page-title {
+				font-family: var(--display);
+				font-size: 32px;
+				font-weight: 400;
+				margin-bottom: 56px;
+				color: var(--text);
+				animation: fadeUp 0.6s ease forwards;
+				opacity: 0;
 			}
+
 			.post-item {
 				display: flex;
 				align-items: baseline;
 				gap: 24px;
-				padding: 16px 0;
-				border-bottom: 1px solid rgba(0,0,0,0.06);
+				padding: 20px 0;
+				border-bottom: 1px solid rgba(0,0,0,0.05);
 				text-decoration: none;
 				color: inherit;
 				transition: opacity 0.3s;
+				animation: fadeUp 0.5s ease forwards;
+				opacity: 0;
+			}
+			.post-item:first-of-type {
+				border-top: 1px solid rgba(0,0,0,0.05);
 			}
 			.post-item:hover {
-				opacity: 0.5;
+				opacity: 0.6;
 			}
-			.post-date {
-				font-family: var(--sans);
-				font-size: 12px;
+
+			.post-number {
+				font-family: var(--display);
+				font-size: 14px;
 				color: var(--text-muted);
 				flex-shrink: 0;
-				min-width: 120px;
-				font-weight: 300;
+				width: 28px;
 			}
+
+			.post-info {
+				flex: 1;
+				min-width: 0;
+			}
+
 			.post-title {
 				font-family: var(--sans);
 				font-size: 16px;
-				font-weight: 500;
+				font-weight: 600;
+				line-height: 1.45;
 				color: var(--text);
+				margin-bottom: 4px;
 				letter-spacing: -0.01em;
 			}
 
+			.post-excerpt {
+				font-family: var(--sans);
+				font-size: 13px;
+				font-weight: 300;
+				color: var(--text-muted);
+				line-height: 1.6;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.post-meta {
+				display: flex;
+				align-items: baseline;
+				gap: 16px;
+				flex-shrink: 0;
+			}
+
+			.post-date {
+				font-family: var(--sans);
+				font-size: 12px;
+				font-weight: 300;
+				color: var(--text-muted);
+				white-space: nowrap;
+			}
+
 			@media (max-width: 768px) {
-				main { padding: 32px 24px; }
-				.post-item {
-					flex-direction: column;
-					gap: 4px;
-				}
+				.content { padding: 32px 24px 80px; }
+				.post-item { flex-wrap: wrap; gap: 8px; }
+				.post-meta { width: 100%; padding-left: 52px; }
+				.post-excerpt { display: none; }
 			}
 		</style>
 	</body>

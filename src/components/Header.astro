@@ -1,8 +1,13 @@
+---
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => pathname.startsWith(href);
+---
+
 <nav>
 	<a href="/">anythingbut.tech</a>
 	<div class="nav-right">
-		<a href="/posts">Posts</a>
-		<a href="/about">About</a>
+		<a href="/posts" class:list={[{ active: isActive('/posts') || isActive('/blog') }]}>Posts</a>
+		<a href="/about" class:list={[{ active: isActive('/about') }]}>About</a>
 	</div>
 </nav>
 
@@ -18,15 +23,18 @@
 		letter-spacing: 0.04em;
 		color: var(--text-muted);
 		flex-shrink: 0;
+		position: sticky;
+		top: 0;
+		background: var(--bg);
+		z-index: 10;
 	}
 	nav a {
 		color: var(--text-muted);
 		text-decoration: none;
 		transition: color 0.3s;
 	}
-	nav a:hover {
-		color: var(--text);
-	}
+	nav a:hover { color: var(--text); }
+	nav a.active { color: var(--text); }
 	.nav-right {
 		display: flex;
 		gap: 28px;
