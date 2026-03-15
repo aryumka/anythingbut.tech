@@ -27,7 +27,7 @@
 }
 
 body {
-	font-family: "Noto Serif KR", "Pretendard Variable", serif;
+	font-family: "Pretendard Variable", "Atkinson", sans-serif;
 	background: var(--white);
 	color: var(--black);
 	-webkit-font-smoothing: antialiased;
