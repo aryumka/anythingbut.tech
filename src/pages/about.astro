@@ -1,0 +1,40 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={`About - ${SITE_TITLE}`} description="About" />
+	</head>
+	<body>
+		<Header />
+		<main class="about">
+			<h1>About</h1>
+			<p>
+				<a href="https://github.com/aryumka" target="_blank">GitHub</a>
+			</p>
+		</main>
+
+		<style>
+			.about {
+				max-width: 720px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem;
+			}
+			.about h1 {
+				font-size: 2rem;
+				margin-bottom: 1.5rem;
+			}
+			.about a {
+				color: #000;
+				text-decoration: underline;
+			}
+			.about a:hover {
+				opacity: 0.6;
+			}
+		</style>
+	</body>
+</html>
