@@ -5,9 +5,9 @@
 }
 
 :root {
-	--bg: #FAFAF8;
+	--bg: #FFFFFF;
 	--text: #1A1A1A;
-	--text-muted: #999;
+	--text-muted: #AAAAAA;
 	--sans: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 	--display: 'Orbit', sans-serif;
 }
