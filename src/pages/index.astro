@@ -48,11 +48,10 @@ const posts = (await getCollection('blog')).sort(
 			.home {
 				display: flex;
 				flex-direction: column;
-				height: calc(100dvh - 56px);
+				height: calc(100dvh - 44px);
 				overflow: hidden;
 			}
 
-			/* Top half - title */
 			.hero {
 				flex: 1;
 				display: flex;
@@ -60,107 +59,94 @@ const posts = (await getCollection('blog')).sort(
 				justify-content: center;
 			}
 			.title {
-				font-size: clamp(1.8rem, 5vw, 3.5rem);
-				font-weight: 700;
-				letter-spacing: -0.02em;
+				font-size: clamp(1.6rem, 4vw, 2.8rem);
+				font-weight: 400;
+				letter-spacing: 0.02em;
+				color: #222;
 			}
 
-			/* Bottom half - horizontal scroll */
 			.posts {
 				flex: 1;
 				display: flex;
 				align-items: center;
 				overflow: hidden;
-				padding: 0 2rem;
+				padding: 0 2.5rem;
 			}
 			.posts-track {
 				display: flex;
-				gap: 1.5rem;
+				gap: 2rem;
 				overflow-x: auto;
 				scroll-snap-type: x mandatory;
 				-webkit-overflow-scrolling: touch;
 				scrollbar-width: none;
-				padding: 1rem 0;
+				padding: 1.5rem 0;
 			}
 			.posts-track::-webkit-scrollbar {
 				display: none;
 			}
 
 			.post-card {
-				flex: 0 0 280px;
+				flex: 0 0 260px;
 				scroll-snap-align: start;
 				display: flex;
 				flex-direction: column;
-				border-radius: 12px;
-				overflow: hidden;
 				text-decoration: none;
-				color: #000;
-				background: #fff;
-				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-				transition: box-shadow 0.2s, transform 0.2s;
+				color: #222;
+				transition: opacity 0.2s;
 			}
 			.post-card:hover {
-				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-				transform: translateY(-2px);
-				opacity: 1;
+				opacity: 0.7;
 			}
 
 			.post-thumb {
 				width: 100%;
-				height: 180px;
+				height: 200px;
 				object-fit: cover;
 			}
 
 			.post-info {
-				padding: 1rem 1.2rem;
+				padding: 0.8rem 0;
 			}
 			.post-date {
-				font-size: 0.8rem;
-				color: #888;
-				margin-bottom: 0.4rem;
+				font-size: 0.7rem;
+				color: #bbb;
+				letter-spacing: 0.03em;
 				display: block;
+				margin-bottom: 0.3rem;
 			}
 			.post-title {
-				font-size: 1rem;
-				font-weight: 700;
-				line-height: 1.4;
-				letter-spacing: -0.01em;
+				font-size: 0.95rem;
+				font-weight: 400;
+				line-height: 1.5;
+				color: #222;
 			}
 
-			/* Mobile: stack vertically */
 			@media (max-width: 768px) {
 				.home {
 					height: auto;
 					overflow: visible;
 				}
 				.hero {
-					min-height: 40vh;
+					min-height: 35vh;
 				}
 				.posts {
 					overflow: visible;
-					padding: 0 1rem;
+					padding: 0 1.2rem;
 				}
 				.posts-track {
 					flex-direction: column;
 					overflow-x: visible;
 					scroll-snap-type: none;
 					width: 100%;
+					gap: 1.5rem;
 					padding-bottom: 2rem;
 				}
 				.post-card {
 					flex: none;
 					width: 100%;
-					flex-direction: row;
-					height: 120px;
 				}
 				.post-thumb {
-					width: 120px;
-					height: 100%;
-				}
-				.post-info {
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
+					height: 220px;
 				}
 			}
 		</style>

@@ -9,35 +9,33 @@ import HeaderLink from './HeaderLink.astro';
 			<HeaderLink href="/blog">Posts</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
-		<div class="spacer"></div>
 	</nav>
 </header>
 
 <style>
 	header {
-		padding: 1rem 2rem;
+		padding: 0.8rem 2.5rem;
 	}
 	nav {
 		display: flex;
 		align-items: center;
+		position: relative;
 	}
 	.site-title {
-		font-size: 0.9rem;
-		font-weight: 700;
-		color: #000;
+		font-size: 0.75rem;
+		font-weight: 400;
+		color: #999;
 		text-decoration: none;
+		letter-spacing: 0.05em;
 	}
 	.site-title:hover {
-		opacity: 0.6;
+		color: #000;
 	}
 	.nav-links {
 		display: flex;
-		gap: 1.5rem;
+		gap: 2rem;
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
-	}
-	.spacer {
-		flex: 1;
 	}
 </style>
