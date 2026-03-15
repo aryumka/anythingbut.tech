@@ -22,15 +22,9 @@ const cardColors = ['#E8E6E1', '#E1E4E8', '#E4E8E2', '#E8E2E5', '#E2E1E8'];
 
 			<section class="hero">
 				<h1 class="hero-title">{SITE_TITLE}</h1>
-				<div class="scroll-hint">
-					<svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
-						<path d="M12 5v14M5 12l7 7 7-7"/>
-					</svg>
-				</div>
 			</section>
 
 			<section class="posts-section">
-				<div class="posts-label">최근 글</div>
 				<div class="posts-track">
 					{posts.map((post, i) => (
 						<a href={`/blog/${post.id}/`} class="post-card" style={`animation-delay: ${0.3 + i * 0.1}s`}>
@@ -64,12 +58,10 @@ const cardColors = ['#E8E6E1', '#E1E4E8', '#E4E8E2', '#E8E2E5', '#E2E1E8'];
 			.hero {
 				flex: 1;
 				display: flex;
-				flex-direction: column;
 				justify-content: center;
 				align-items: center;
 				text-align: center;
 				padding: 0 48px;
-				position: relative;
 			}
 			.hero-title {
 				font-family: var(--display);
@@ -81,53 +73,11 @@ const cardColors = ['#E8E6E1', '#E1E4E8', '#E4E8E2', '#E8E2E5', '#E2E1E8'];
 				animation: fadeUp 0.8s ease forwards;
 				opacity: 0;
 			}
-			.scroll-hint {
-				position: absolute;
-				bottom: 32px;
-				left: 50%;
-				transform: translateX(-50%);
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 8px;
-				color: var(--text-muted);
-				font-family: var(--sans);
-				font-size: 10px;
-				letter-spacing: 0.15em;
-				text-transform: uppercase;
-				animation: fadeUp 0.8s ease 0.7s forwards, hintPulse 2.5s ease-in-out 1.5s infinite;
-				opacity: 0;
-			}
-			.scroll-hint svg {
-				width: 14px;
-				height: 14px;
-				stroke: currentColor;
-			}
 
 			/* Posts */
 			.posts-section {
 				flex-shrink: 0;
 				padding: 0 0 48px 48px;
-			}
-			.posts-label {
-				font-family: var(--sans);
-				font-size: 10px;
-				text-transform: uppercase;
-				letter-spacing: 0.15em;
-				color: var(--text-muted);
-				margin-bottom: 20px;
-				display: flex;
-				align-items: center;
-				gap: 12px;
-				animation: fadeUp 0.8s ease 0.25s forwards;
-				opacity: 0;
-			}
-			.posts-label::after {
-				content: '';
-				flex: 1;
-				height: 1px;
-				background: rgba(0,0,0,0.06);
-				margin-right: 48px;
 			}
 
 			.posts-track {
@@ -164,9 +114,12 @@ const cardColors = ['#E8E6E1', '#E1E4E8', '#E4E8E2', '#E8E2E5', '#E2E1E8'];
 				height: 190px;
 				border-radius: 4px;
 				margin-bottom: 14px;
+				display: flex;
+				align-items: flex-end;
+				padding: 16px 18px;
 				position: relative;
 				overflow: hidden;
-				transition: filter 0.4s ease;
+				transition: all 0.4s ease;
 			}
 			.post-card:hover .card-visual {
 				filter: brightness(0.97);
