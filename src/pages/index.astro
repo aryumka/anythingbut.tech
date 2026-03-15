@@ -7,6 +7,8 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+const cardColors = ['#E8E6E1', '#E1E4E8', '#E4E8E2', '#E8E2E5', '#E2E1E8'];
 ---
 
 <!doctype html>
@@ -15,29 +17,33 @@ const posts = (await getCollection('blog')).sort(
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
-		<div class="home">
+		<div class="page">
+			<Header />
+
 			<section class="hero">
-				<h1 class="title">{SITE_TITLE}</h1>
+				<h1 class="hero-title">{SITE_TITLE}</h1>
+				<div class="scroll-hint">
+					<svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round">
+						<path d="M12 5v14M5 12l7 7 7-7"/>
+					</svg>
+				</div>
 			</section>
 
-			<section class="posts">
+			<section class="posts-section">
+				<div class="posts-label">최근 글</div>
 				<div class="posts-track">
-					{posts.map((post) => (
-						<a href={`/blog/${post.id}/`} class="post-card">
-							{post.data.heroImage && (
-								<img
-									src={typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src}
-									alt={post.data.title}
-									class="post-thumb"
-								/>
-							)}
-							<div class="post-info">
-								<span class="post-date">
-									{post.data.pubDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
-								</span>
-								<h2 class="post-title">{post.data.title}</h2>
+					{posts.map((post, i) => (
+						<a href={`/blog/${post.id}/`} class="post-card" style={`animation-delay: ${0.3 + i * 0.1}s`}>
+							<div class="card-visual" style={`background: ${cardColors[i % cardColors.length]}`}>
+								<span class="card-number">{String(posts.length - i).padStart(2, '0')}</span>
 							</div>
+							<div class="card-date">
+								{post.data.pubDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+							</div>
+							<div class="card-title">{post.data.title}</div>
+							{post.data.description && (
+								<div class="card-excerpt">{post.data.description}</div>
+							)}
 						</a>
 					))}
 				</div>
@@ -45,109 +51,171 @@ const posts = (await getCollection('blog')).sort(
 		</div>
 
 		<style>
-			.home {
+			body { overflow: hidden; }
+
+			.page {
 				display: flex;
 				flex-direction: column;
-				height: calc(100dvh - 44px);
-				overflow: hidden;
+				height: 100vh;
+				height: 100dvh;
 			}
 
+			/* Hero */
 			.hero {
 				flex: 1;
 				display: flex;
-				align-items: center;
+				flex-direction: column;
 				justify-content: center;
-			}
-			.title {
-				font-size: clamp(2rem, 5vw, 3.5rem);
-				font-weight: 400;
-				letter-spacing: 0.02em;
-				color: #222;
-			}
-
-			.posts {
-				flex: 1;
-				display: flex;
 				align-items: center;
-				overflow: hidden;
-				padding: 0 2.5rem;
+				text-align: center;
+				padding: 0 48px;
+				position: relative;
 			}
-			.posts-track {
-				display: flex;
-				gap: 2rem;
-				overflow-x: auto;
-				scroll-snap-type: x mandatory;
-				-webkit-overflow-scrolling: touch;
-				scrollbar-width: none;
-				padding: 1.5rem 0;
+			.hero-title {
+				font-family: var(--display);
+				font-size: clamp(38px, 5.5vw, 72px);
+				font-weight: 400;
+				letter-spacing: 0.01em;
+				line-height: 1.3;
+				color: var(--text);
+				animation: fadeUp 0.8s ease forwards;
+				opacity: 0;
 			}
-			.posts-track::-webkit-scrollbar {
-				display: none;
-			}
-
-			.post-card {
-				flex: 0 0 260px;
-				scroll-snap-align: start;
+			.scroll-hint {
+				position: absolute;
+				bottom: 32px;
+				left: 50%;
+				transform: translateX(-50%);
 				display: flex;
 				flex-direction: column;
+				align-items: center;
+				gap: 8px;
+				color: var(--text-muted);
+				font-family: var(--sans);
+				font-size: 10px;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				animation: fadeUp 0.8s ease 0.7s forwards, hintPulse 2.5s ease-in-out 1.5s infinite;
+				opacity: 0;
+			}
+			.scroll-hint svg {
+				width: 14px;
+				height: 14px;
+				stroke: currentColor;
+			}
+
+			/* Posts */
+			.posts-section {
+				flex-shrink: 0;
+				padding: 0 0 48px 48px;
+			}
+			.posts-label {
+				font-family: var(--sans);
+				font-size: 10px;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: var(--text-muted);
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				animation: fadeUp 0.8s ease 0.25s forwards;
+				opacity: 0;
+			}
+			.posts-label::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: rgba(0,0,0,0.06);
+				margin-right: 48px;
+			}
+
+			.posts-track {
+				display: flex;
+				gap: 20px;
+				overflow-x: auto;
+				overflow-y: hidden;
+				scroll-snap-type: x mandatory;
+				scrollbar-width: none;
+				padding-right: 48px;
+				padding-bottom: 8px;
+			}
+			.posts-track::-webkit-scrollbar { display: none; }
+
+			.post-card {
+				flex-shrink: 0;
+				width: 320px;
+				scroll-snap-align: start;
+				cursor: pointer;
 				text-decoration: none;
-				color: #222;
-				transition: opacity 0.2s;
+				color: inherit;
+				display: block;
+				transition: transform 0.35s ease;
+				animation: fadeUp 0.6s ease forwards;
+				opacity: 0;
 			}
 			.post-card:hover {
-				opacity: 0.7;
+				transform: translateY(-3px);
+				opacity: 1;
 			}
 
-			.post-thumb {
+			.card-visual {
 				width: 100%;
-				height: 200px;
-				object-fit: cover;
+				height: 190px;
+				border-radius: 4px;
+				margin-bottom: 14px;
+				position: relative;
+				overflow: hidden;
+				transition: filter 0.4s ease;
+			}
+			.post-card:hover .card-visual {
+				filter: brightness(0.97);
 			}
 
-			.post-info {
-				padding: 0.8rem 0;
+			.card-number {
+				font-family: var(--display);
+				font-size: 80px;
+				color: rgba(0,0,0,0.05);
+				position: absolute;
+				top: 8px;
+				right: 16px;
+				line-height: 1;
+				pointer-events: none;
 			}
-			.post-date {
-				font-size: 0.7rem;
-				color: #bbb;
-				letter-spacing: 0.03em;
-				display: block;
-				margin-bottom: 0.3rem;
+
+			.card-date {
+				font-family: var(--sans);
+				font-size: 11px;
+				color: var(--text-muted);
+				margin-bottom: 5px;
+				font-weight: 300;
 			}
-			.post-title {
-				font-size: 0.95rem;
-				font-weight: 400;
-				line-height: 1.5;
-				color: #222;
+			.card-title {
+				font-family: var(--sans);
+				font-size: 17px;
+				font-weight: 600;
+				line-height: 1.45;
+				color: var(--text);
+				margin-bottom: 8px;
+				letter-spacing: -0.01em;
+			}
+			.card-excerpt {
+				font-family: var(--sans);
+				font-size: 12.5px;
+				font-weight: 300;
+				color: var(--text-muted);
+				line-height: 1.65;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
 			}
 
 			@media (max-width: 768px) {
-				.home {
-					height: auto;
-					overflow: visible;
-				}
-				.hero {
-					min-height: 35vh;
-				}
-				.posts {
-					overflow: visible;
-					padding: 0 1.2rem;
-				}
-				.posts-track {
-					flex-direction: column;
-					overflow-x: visible;
-					scroll-snap-type: none;
-					width: 100%;
-					gap: 1.5rem;
-					padding-bottom: 2rem;
-				}
-				.post-card {
-					flex: none;
-					width: 100%;
-				}
-				.post-thumb {
-					height: 220px;
-				}
+				.hero { padding: 0 24px; }
+				.posts-section { padding: 0 0 32px 24px; }
+				.post-card { width: 260px; }
+				.card-visual { height: 155px; }
 			}
 		</style>
 	</body>
