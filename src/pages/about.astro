@@ -7,33 +7,124 @@ import { SITE_TITLE } from '../consts';
 <!doctype html>
 <html lang="ko">
 	<head>
-		<BaseHead title={`About - ${SITE_TITLE}`} description="About" />
+		<BaseHead title={`About — ${SITE_TITLE}`} description="About" />
 	</head>
 	<body>
 		<Header />
-		<main class="about">
-			<h1>About</h1>
-			<p>
-				<a href="https://github.com/aryumka" target="_blank">GitHub</a>
-			</p>
-		</main>
+		<div class="content">
+			<h1 class="page-title">About</h1>
+
+			<div class="about-body">
+				<p>
+					<strong>기술 블로그 아닌 블로그</strong>는 코드를 쓰는 사람이
+					코드 바깥의 것들에 대해 쓰는 공간입니다.
+				</p>
+				<p>
+					소프트웨어를 만들면서 늘 궁금했습니다.
+					우리가 매일 쓰는 도구가 생각의 방향을 바꾸고 있다는 것,
+					효율이라는 말이 어느새 목적 자체가 되어버렸다는 것,
+					빠르게 만들고 빠르게 버리는 일이 습관이 되었다는 것.
+				</p>
+				<p>
+					이 블로그는 그런 질문들을 천천히 꺼내보는 곳입니다.
+					기술을 부정하려는 게 아니라, 기술만으로는 닿지 않는 것들을
+					언어로 더듬어보려는 시도입니다.
+				</p>
+				<p>
+					에세이, 비평, 단상 — 형식에 구애받지 않고,
+					그때그때 떠오르는 생각을 가능한 한 정직하게 적습니다.
+				</p>
+			</div>
+
+			<div class="contact">
+				<div class="contact-label">Contact</div>
+				<div class="contact-links">
+					<a href="https://github.com/aryumka" target="_blank">GitHub</a>
+				</div>
+			</div>
+		</div>
 
 		<style>
-			.about {
-				max-width: 720px;
+			.content {
+				max-width: 560px;
 				margin: 0 auto;
-				padding: 3rem 1.5rem;
+				padding: 80px 48px 160px;
 			}
-			.about h1 {
-				font-size: 2rem;
-				margin-bottom: 1.5rem;
+
+			.page-title {
+				font-family: var(--display);
+				font-size: 32px;
+				font-weight: 400;
+				margin-bottom: 56px;
+				color: var(--text);
+				animation: fadeUp 0.6s ease forwards;
+				opacity: 0;
 			}
-			.about a {
-				color: #000;
-				text-decoration: underline;
+
+			.about-body {
+				animation: fadeUp 0.6s ease forwards;
+				animation-delay: 0.1s;
+				opacity: 0;
 			}
-			.about a:hover {
-				opacity: 0.6;
+
+			.about-body p {
+				font-family: var(--sans);
+				font-size: 15px;
+				font-weight: 400;
+				line-height: 1.9;
+				color: #333;
+				margin-bottom: 28px;
+			}
+
+			.about-body p strong {
+				font-weight: 500;
+				color: var(--text);
+			}
+
+			.about-body p:last-child {
+				margin-bottom: 0;
+			}
+
+			.contact {
+				margin-top: 64px;
+				padding-top: 40px;
+				border-top: 1px solid rgba(0,0,0,0.06);
+				animation: fadeUp 0.6s ease forwards;
+				animation-delay: 0.2s;
+				opacity: 0;
+			}
+
+			.contact-label {
+				font-family: var(--sans);
+				font-size: 10px;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: var(--text-muted);
+				margin-bottom: 20px;
+			}
+
+			.contact-links {
+				display: flex;
+				gap: 24px;
+			}
+
+			.contact-links a {
+				font-family: var(--sans);
+				font-size: 13px;
+				font-weight: 400;
+				color: var(--text-muted);
+				text-decoration: none;
+				border-bottom: 1px solid rgba(0,0,0,0.1);
+				padding-bottom: 2px;
+				transition: color 0.3s, border-color 0.3s;
+			}
+			.contact-links a:hover {
+				color: var(--text);
+				border-color: var(--text);
+			}
+
+			@media (max-width: 768px) {
+				.content { padding: 48px 24px 120px; }
 			}
 		</style>
 	</body>

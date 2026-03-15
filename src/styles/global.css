@@ -8,6 +8,7 @@
 	--bg: #FFFFFF;
 	--text: #1A1A1A;
 	--text-muted: #AAAAAA;
+	--text-body: #333;
 	--sans: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 	--display: 'Orbit', sans-serif;
 }
