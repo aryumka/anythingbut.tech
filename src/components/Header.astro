@@ -25,7 +25,9 @@ const isActive = (href: string) => pathname.startsWith(href);
 		flex-shrink: 0;
 		position: sticky;
 		top: 0;
-		background: var(--bg);
+		background: rgba(255,255,255,0.92);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
 		z-index: 10;
 	}
 	nav a {
